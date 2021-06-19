@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanHackAssessment", "VanHackAssessment\VanHackAssessment.csproj", "{B2E39647-91CD-4979-A834-8770D8A7E99C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanHackAssessment.Test", "VanHackAssessment.Test\VanHackAssessment.Test.csproj", "{776052FE-D3F7-416E-98F8-CED9ED7D44E9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2E39647-91CD-4979-A834-8770D8A7E99C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E39647-91CD-4979-A834-8770D8A7E99C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E39647-91CD-4979-A834-8770D8A7E99C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E39647-91CD-4979-A834-8770D8A7E99C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{776052FE-D3F7-416E-98F8-CED9ED7D44E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{776052FE-D3F7-416E-98F8-CED9ED7D44E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{776052FE-D3F7-416E-98F8-CED9ED7D44E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{776052FE-D3F7-416E-98F8-CED9ED7D44E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7BE047F4-EC07-4BC2-BFF1-6CF5C04CE2EF}
+	EndGlobalSection
+EndGlobal
