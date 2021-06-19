@@ -29,12 +29,12 @@ namespace VanHackAssessment
 
                 if (_lastNumber == 1 || (lastNumberText.StartsWith("5") || (lastNumberText.StartsWith("1") && _lastNumber >= 10)))
                 {
-                    _romanNumeral = ProcessSingle(key);
+                    _romanNumeral = TryUniqueRomanNumeral(key);
                 }
                 else
                 {
                     _romanNumeral += _lastNumber >= 10 ?
-                    ProcessMultiplePositive(key) : ProcessMultipleNegative(key);
+                    TryIncrease(key) : TryDecrease(key);
                 }
 
                 if (_lastNumber == 0)
@@ -46,21 +46,21 @@ namespace VanHackAssessment
             return _romanNumeral;
         }
 
-        private string ProcessSingle(int romanNumber)
+        private string TryUniqueRomanNumeral(int romanNumber)
         {
             int resto = _lastNumber % romanNumber;
 
             if (resto != _lastNumber)
             {
                 _lastNumber = resto;
-                var reRunResult = ProcessSingle(romanNumber);
+                var reRunResult = TryUniqueRomanNumeral(romanNumber);
                 return romanNumerals[romanNumber] + reRunResult;
             }
 
             return string.Empty;
         }
 
-        private string ProcessMultiplePositive(int romanNumber)
+        private string TryIncrease(int romanNumber)
         {
             var romanNumeral = string.Empty;
 
@@ -83,7 +83,7 @@ namespace VanHackAssessment
             return string.Empty;
         }
 
-        private string ProcessMultipleNegative(int romanNumber)
+        private string TryDecrease(int romanNumber)
         {
             foreach (var key in romanNumerals.Keys)
             {
