@@ -25,17 +25,9 @@ namespace VanHackAssessment
 
             foreach (var key in romanNumerals.Keys)
             {
-                var lastNumberText = _lastNumber.ToString();
-
-                if (_lastNumber == 1 || (lastNumberText.StartsWith("5") || (lastNumberText.StartsWith("1") && _lastNumber >= 10)))
-                {
-                    _romanNumeral = TryUniqueRomanNumeral(key);
-                }
-                else
-                {
-                    _romanNumeral += _lastNumber >= 10 ?
-                    TryIncrease(key) : TryDecrease(key);
-                }
+                _romanNumeral += TryUniqueRomanNumeral(key);
+                _romanNumeral += TryIncrease(key);
+                _romanNumeral += TryDecrease(key);
 
                 if (_lastNumber == 0)
                 {
@@ -48,13 +40,18 @@ namespace VanHackAssessment
 
         private string TryUniqueRomanNumeral(int romanNumber)
         {
-            int resto = _lastNumber % romanNumber;
+            var lastNumberText = _lastNumber.ToString();
 
-            if (resto != _lastNumber)
+            if (_lastNumber == 1 || (lastNumberText.StartsWith("5") || (lastNumberText.StartsWith("1") && _lastNumber >= 10)))
             {
-                _lastNumber = resto;
-                var reRunResult = TryUniqueRomanNumeral(romanNumber);
-                return romanNumerals[romanNumber] + reRunResult;
+                int resto = _lastNumber % romanNumber;
+
+                if (resto != _lastNumber)
+                {
+                    _lastNumber = resto;
+                    var reRunResult = TryUniqueRomanNumeral(romanNumber);
+                    return romanNumerals[romanNumber] + reRunResult;
+                }
             }
 
             return string.Empty;
@@ -62,20 +59,23 @@ namespace VanHackAssessment
 
         private string TryIncrease(int romanNumber)
         {
-            var romanNumeral = string.Empty;
-
-            foreach (var key in romanNumerals.Keys)
+            if (_lastNumber > romanNumber)
             {
-                for (int i = 3; i >= 1; i--)
+                var romanNumeral = string.Empty;
+
+                foreach (var key in romanNumerals.Keys)
                 {
-                    var sum = romanNumber + key * i;
-
-                    if (sum <= _lastNumber)
+                    for (int i = 3; i >= 1; i--)
                     {
-                        _lastNumber -= sum;
-                        romanNumeral += new string(romanNumerals[key], i);
+                        var sum = romanNumber + key * i;
 
-                        return romanNumeral;
+                        if (sum <= _lastNumber)
+                        {
+                            _lastNumber -= sum;
+                            romanNumeral += romanNumerals[romanNumber] + new string(romanNumerals[key], i);
+
+                            return romanNumeral;
+                        }
                     }
                 }
             }
@@ -85,14 +85,17 @@ namespace VanHackAssessment
 
         private string TryDecrease(int romanNumber)
         {
-            foreach (var key in romanNumerals.Keys)
+            if (_lastNumber > 0 && _lastNumber < romanNumber)
             {
-                for (int i = 1; i <= 3; i++)
+                foreach (var key in romanNumerals.Keys)
                 {
-                    if (romanNumber - key * i == _lastNumber)
+                    for (int i = 1; i <= 3; i++)
                     {
-                        _lastNumber = 0;
-                        return new string(romanNumerals[key], i) + romanNumerals[romanNumber];
+                        if (romanNumber - key * i == _lastNumber)
+                        {
+                            _lastNumber = 0;
+                            return new string(romanNumerals[key], i) + romanNumerals[romanNumber];
+                        }
                     }
                 }
             }
