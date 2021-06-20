@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace VanHackAssessment
 {
@@ -15,92 +17,127 @@ namespace VanHackAssessment
             { 1, 'I' },
         };
 
+        List<int> numbers = new List<int>();
+
         private string _romanNumeral;
-        private int _lastNumber;
 
         public string Numerals(int num)
         {
-            _romanNumeral = string.Empty;
-            _lastNumber = num;
+            var numText = num.ToString();
 
-            foreach (var key in romanNumerals.Keys)
+            for (int i = 1; i <= numText.Length; i++)
             {
-                _romanNumeral += TryUniqueRomanNumeral(key);
-                _romanNumeral += TryIncrease(key);
-                _romanNumeral += TryDecrease(key);
+                var numberText = numText.Substring(numText.Length - i, 1);
+                numbers.Add(int.Parse(numberText) * (int)Math.Pow(10, i - 1));
+            }
 
-                if (_lastNumber == 0)
+            _romanNumeral = string.Empty;
+
+            foreach (var number in numbers)
+            {
+                if (number != 0)
                 {
-                    break;
+                    if (TryUniqueRomanNumeral(number, out string romanNumber))
+                    {
+                        _romanNumeral = $"{romanNumber}{_romanNumeral}";
+                    }
+                    else if (TryDecrease(number, out romanNumber))
+                    {
+                        _romanNumeral = $"{romanNumber}{_romanNumeral}";
+                    }
+                    else if (TryIncrease(number, out romanNumber))
+                    {
+                        _romanNumeral = $"{romanNumber}{_romanNumeral}";
+                    }
                 }
             }
 
             return _romanNumeral;
         }
 
-        private string TryUniqueRomanNumeral(int romanNumber)
+        private bool TryUniqueRomanNumeral(int number, out string romanNumeral)
         {
-            var lastNumberText = _lastNumber.ToString();
+            var lastNumberText = number.ToString();
 
-            if (_lastNumber == 1 || (lastNumberText.StartsWith("5") || (lastNumberText.StartsWith("1") && _lastNumber >= 10)))
+            if (number == 1 || (lastNumberText.StartsWith("5") || (lastNumberText.StartsWith("1") && number >= 10)))
             {
-                int resto = _lastNumber % romanNumber;
-
-                if (resto != _lastNumber)
-                {
-                    _lastNumber = resto;
-                    var reRunResult = TryUniqueRomanNumeral(romanNumber);
-                    return romanNumerals[romanNumber] + reRunResult;
-                }
-            }
-
-            return string.Empty;
-        }
-
-        private string TryIncrease(int romanNumber)
-        {
-            if (_lastNumber > romanNumber)
-            {
-                var romanNumeral = string.Empty;
-
                 foreach (var key in romanNumerals.Keys)
                 {
-                    for (int i = 3; i >= 1; i--)
+                    int resto = number % key;
+
+                    if (resto != number)
                     {
-                        var sum = romanNumber + key * i;
+                        romanNumeral = romanNumerals[key].ToString();
 
-                        if (sum <= _lastNumber)
+                        if (TryUniqueRomanNumeral(resto, out string romanNumeralComplement))
                         {
-                            _lastNumber -= sum;
-                            romanNumeral += romanNumerals[romanNumber] + new string(romanNumerals[key], i);
-
-                            return romanNumeral;
+                            romanNumeral += romanNumeralComplement;
                         }
+
+                        return true;
                     }
                 }
             }
 
-            return string.Empty;
+            romanNumeral = null;
+            return false;
         }
 
-        private string TryDecrease(int romanNumber)
+        private bool TryIncrease(int number, out string romanNumeral)
         {
-            if (_lastNumber > 0 && _lastNumber < romanNumber)
+            var firstLowerThenNumber = romanNumerals.Keys
+                .Where(x => x < number)
+                .OrderBy(x => x)
+                .LastOrDefault();
+
+            if (firstLowerThenNumber > 0)
             {
-                foreach (var key in romanNumerals.Keys)
+                var sum = firstLowerThenNumber;
+                romanNumeral = romanNumerals[firstLowerThenNumber].ToString();
+
+                for (int i = 3; i >= 1; i--)
                 {
-                    for (int i = 1; i <= 3; i++)
+                    foreach (var keySum in romanNumerals.Keys)
                     {
-                        if (romanNumber - key * i == _lastNumber)
+                        if (sum + keySum * i <= number)
                         {
-                            _lastNumber = 0;
-                            return new string(romanNumerals[key], i) + romanNumerals[romanNumber];
+                            sum += keySum * i;
+                            romanNumeral += new string(romanNumerals[keySum], i);
                         }
+                    }
+                }
+
+                return true;
+            }
+
+            romanNumeral = null;
+            return false;
+        }
+
+        private bool TryDecrease(int number, out string romanNumeral)
+        {
+            var firstHigherThenNumber = romanNumerals.Keys
+                .Where(x => x > number)
+                .OrderBy(x => x)
+                .FirstOrDefault();
+
+            if (firstHigherThenNumber > 0)
+            {
+                var sub = firstHigherThenNumber;
+                romanNumeral = romanNumerals[firstHigherThenNumber].ToString();
+
+                foreach (var keySub in romanNumerals.Keys)
+                {
+                    if (firstHigherThenNumber - keySub == number)
+                    {
+                        romanNumeral = romanNumerals[keySub] + romanNumeral;
+                        return true;
                     }
                 }
             }
 
-            return string.Empty;
+            romanNumeral = null;
+            return false;
         }
     }
 }
