@@ -23,6 +23,7 @@ namespace VanHackAssessment
         public string Numerals(int num)
         {
             RomanNumeral = string.Empty;
+            NumericalPlaces = new List<int>();
 
             ExtractNumericalPlaces(num);
             ProcessNumericalPlaces();
