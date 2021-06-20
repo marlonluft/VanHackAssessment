@@ -17,14 +17,14 @@ namespace VanHackAssessment
 
         public int Process(string roman)
         {
-            return ExtractRomanPlaces(roman);
+            return ConvertRomanToDecimal(roman);
         }
 
         /// <summary>
-        /// Extract each symbol from the roman number to post-process separately
+        /// Convert roman symbols to decimal values and sum.
         /// </summary>
-        /// <param name="number">Number to extract</param>
-        private int ExtractRomanPlaces(string romanNumber)
+        /// <param name="romanNumber">Roman number</param>
+        private int ConvertRomanToDecimal(string romanNumber)
         {
             int value = 0;
 
