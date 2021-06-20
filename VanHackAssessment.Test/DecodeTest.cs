@@ -21,5 +21,30 @@ namespace VanHackAssessment.Test
         {
             Assert.True(4 == Challenge.Decode("IV"));
         }
+
+
+        [Fact]
+        public void ShouldHandleM()
+        {
+            Assert.True(1000 == Challenge.Decode("M"));
+        }
+
+        [Fact]
+        public void ShouldHandleMCMXC()
+        {
+            Assert.True(1990 == Challenge.Decode("MCMXC"));
+        }
+
+        [Fact]
+        public void ShouldHandleMMVIII()
+        {
+            Assert.True(2008 == Challenge.Decode("MMVIII"));
+        }
+
+        [Fact]
+        public void ShouldHandleMDCLXVI()
+        {
+            Assert.True(1666 == Challenge.Decode("MDCLXVI"));
+        }
     }
 }
