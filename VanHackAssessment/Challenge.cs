@@ -20,16 +20,22 @@ namespace VanHackAssessment
         private List<int> NumericalPlaces { get; set; }
         private string RomanNumeral { get; set; }
 
+        public Challenge()
+        {
+            RomanNumeral = string.Empty;
+            NumericalPlaces = new List<int>();
+        }
+
+        public static string Numerals(int num) =>
+            new Challenge().Process(num);
+
         /// <summary>
         /// Converts from a integer number to Roman numerals
         /// </summary>
         /// <param name="num">Number to convert</param>
         /// <returns>Number in Roman numerals</returns>
-        public string Numerals(int num)
+        public string Process(int num)
         {
-            RomanNumeral = string.Empty;
-            NumericalPlaces = new List<int>();
-
             ExtractNumericalPlaces(num);
             ProcessNumericalPlaces();
 

@@ -4,14 +4,12 @@
     {
         static void Main(string[] args)
         {
-            var challenge = new Challenge();
-
-            challenge.Numerals(1889);
-            challenge.Numerals(91);
-            challenge.Numerals(89);
-            challenge.Numerals(6);
-            challenge.Numerals(4);
-            challenge.Numerals(1);
+            Challenge.Numerals(1889);
+            Challenge.Numerals(91);
+            Challenge.Numerals(89);
+            Challenge.Numerals(6);
+            Challenge.Numerals(4);
+            Challenge.Numerals(1);
         }
     }
 }
