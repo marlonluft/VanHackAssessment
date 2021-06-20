@@ -134,7 +134,6 @@ namespace VanHackAssessment
 
             if (romanNumeralAboveCurrentNumber > 0)
             {
-                var sub = romanNumeralAboveCurrentNumber;
                 romanNumeral = _romanNumerals[romanNumeralAboveCurrentNumber].ToString();
 
                 foreach (var keySub in _romanNumerals.Keys)
