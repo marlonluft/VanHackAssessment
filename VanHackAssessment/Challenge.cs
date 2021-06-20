@@ -20,6 +20,11 @@ namespace VanHackAssessment
         private List<int> NumericalPlaces { get; set; }
         private string RomanNumeral { get; set; }
 
+        /// <summary>
+        /// Converts from a integer number to Roman numerals
+        /// </summary>
+        /// <param name="num">Number to convert</param>
+        /// <returns>Number in Roman numerals</returns>
         public string Numerals(int num)
         {
             RomanNumeral = string.Empty;
@@ -31,6 +36,10 @@ namespace VanHackAssessment
             return RomanNumeral;
         }
 
+        /// <summary>
+        /// Extract each decimal place from the number to post-process separately
+        /// </summary>
+        /// <param name="number">Number to extract</param>
         private void ExtractNumericalPlaces(int number)
         {
             var numberToExtractString = number.ToString();
@@ -44,6 +53,9 @@ namespace VanHackAssessment
             }
         }
 
+        /// <summary>
+        /// Process each decimal place extracted, converting to Roman numeral
+        /// </summary>
         private void ProcessNumericalPlaces()
         {
             foreach (var numericalPlace in NumericalPlaces)
@@ -66,6 +78,12 @@ namespace VanHackAssessment
             }
         }
 
+        /// <summary>
+        /// Try to convert the number to an exact Roman numeral without subtracting or summing; Ex: 10 = X
+        /// </summary>
+        /// <param name="number">decimal place number</param>
+        /// <param name="romanNumeral">return the roman numeral</param>
+        /// <returns>Indicates if it was successul of not</returns>
         private bool TryExactRomanNumeral(int number, out string romanNumeral)
         {
             var numberText = number.ToString();
@@ -94,6 +112,12 @@ namespace VanHackAssessment
             return false;
         }
 
+        /// <summary>
+        /// Try converting the number to a Roman numeral by summing; Ex: 7 = VII
+        /// </summary>
+        /// <param name="number">decimal place number</param>
+        /// <param name="romanNumeral">return the roman numeral</param>
+        /// <returns>Indicates if it was successul of not</returns>        
         private bool TryIncreaseRomanNumeral(int number, out string romanNumeral)
         {
             var romanNumeralBelowCurrentNumber = _romanNumerals.Keys
@@ -125,6 +149,12 @@ namespace VanHackAssessment
             return false;
         }
 
+        /// <summary>
+        /// Try converting the number to a Roman numeral by subtracting; Ex: 4 = IV
+        /// </summary>
+        /// <param name="number">decimal place number</param>
+        /// <param name="romanNumeral">return the roman numeral</param>
+        /// <returns>Indicates if it was successul of not</returns>
         private bool TryDecreaseRomanNumeral(int number, out string romanNumeral)
         {
             var romanNumeralAboveCurrentNumber = _romanNumerals.Keys
