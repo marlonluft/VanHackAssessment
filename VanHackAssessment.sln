@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanHackAssessment", "VanHackAssessment\VanHackAssessment.csproj", "{B2E39647-91CD-4979-A834-8770D8A7E99C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VanHackAssessment", "VanHackAssessment\VanHackAssessment.csproj", "{B2E39647-91CD-4979-A834-8770D8A7E99C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanHackAssessment.Test", "VanHackAssessment.Test\VanHackAssessment.Test.csproj", "{776052FE-D3F7-416E-98F8-CED9ED7D44E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VanHackAssessment.Test", "VanHackAssessment.Test\VanHackAssessment.Test.csproj", "{776052FE-D3F7-416E-98F8-CED9ED7D44E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
