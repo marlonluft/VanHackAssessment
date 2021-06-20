@@ -25,7 +25,7 @@ namespace VanHackAssessment
             RomanNumeral = string.Empty;
 
             ExtractNumericalPlaces(num);
-            ProcessNumbers();
+            ProcessNumericalPlaces();
 
             return RomanNumeral;
         }
@@ -43,21 +43,21 @@ namespace VanHackAssessment
             }
         }
 
-        private void ProcessNumbers()
+        private void ProcessNumericalPlaces()
         {
-            foreach (var number in NumericalPlaces)
+            foreach (var numericalPlace in NumericalPlaces)
             {
-                if (number != 0)
+                if (numericalPlace != 0)
                 {
-                    if (TryUniqueRomanNumeral(number, out string romanNumber))
+                    if (TryExactRomanNumeral(numericalPlace, out string romanNumber))
                     {
                         RomanNumeral = $"{romanNumber}{RomanNumeral}";
                     }
-                    else if (TryDecrease(number, out romanNumber))
+                    else if (TryDecreaseRomanNumeral(numericalPlace, out romanNumber))
                     {
                         RomanNumeral = $"{romanNumber}{RomanNumeral}";
                     }
-                    else if (TryIncrease(number, out romanNumber))
+                    else if (TryIncreaseRomanNumeral(numericalPlace, out romanNumber))
                     {
                         RomanNumeral = $"{romanNumber}{RomanNumeral}";
                     }
@@ -65,21 +65,21 @@ namespace VanHackAssessment
             }
         }
 
-        private bool TryUniqueRomanNumeral(int number, out string romanNumeral)
+        private bool TryExactRomanNumeral(int number, out string romanNumeral)
         {
-            var lastNumberText = number.ToString();
+            var numberText = number.ToString();
 
-            if (number == 1 || (lastNumberText.StartsWith("5") || (lastNumberText.StartsWith("1") && number >= 10)))
+            if (number == 1 || (numberText.StartsWith("5") || (numberText.StartsWith("1") && number >= 10)))
             {
                 foreach (var key in _romanNumerals.Keys)
                 {
-                    int resto = number % key;
+                    int remainder = number % key;
 
-                    if (resto != number)
+                    if (remainder != number)
                     {
                         romanNumeral = _romanNumerals[key].ToString();
 
-                        if (TryUniqueRomanNumeral(resto, out string romanNumeralComplement))
+                        if (TryExactRomanNumeral(remainder, out string romanNumeralComplement))
                         {
                             romanNumeral += romanNumeralComplement;
                         }
@@ -93,17 +93,17 @@ namespace VanHackAssessment
             return false;
         }
 
-        private bool TryIncrease(int number, out string romanNumeral)
+        private bool TryIncreaseRomanNumeral(int number, out string romanNumeral)
         {
-            var firstLowerThenNumber = _romanNumerals.Keys
+            var romanNumeralBelowCurrentNumber = _romanNumerals.Keys
                 .Where(x => x < number)
                 .OrderBy(x => x)
                 .LastOrDefault();
 
-            if (firstLowerThenNumber > 0)
+            if (romanNumeralBelowCurrentNumber > 0)
             {
-                var sum = firstLowerThenNumber;
-                romanNumeral = _romanNumerals[firstLowerThenNumber].ToString();
+                var sum = romanNumeralBelowCurrentNumber;
+                romanNumeral = _romanNumerals[romanNumeralBelowCurrentNumber].ToString();
 
                 for (int i = 3; i >= 1; i--)
                 {
@@ -124,21 +124,21 @@ namespace VanHackAssessment
             return false;
         }
 
-        private bool TryDecrease(int number, out string romanNumeral)
+        private bool TryDecreaseRomanNumeral(int number, out string romanNumeral)
         {
-            var firstHigherThenNumber = _romanNumerals.Keys
+            var romanNumeralAboveCurrentNumber = _romanNumerals.Keys
                 .Where(x => x > number)
                 .OrderBy(x => x)
                 .FirstOrDefault();
 
-            if (firstHigherThenNumber > 0)
+            if (romanNumeralAboveCurrentNumber > 0)
             {
-                var sub = firstHigherThenNumber;
-                romanNumeral = _romanNumerals[firstHigherThenNumber].ToString();
+                var sub = romanNumeralAboveCurrentNumber;
+                romanNumeral = _romanNumerals[romanNumeralAboveCurrentNumber].ToString();
 
                 foreach (var keySub in _romanNumerals.Keys)
                 {
-                    if (firstHigherThenNumber - keySub == number)
+                    if (romanNumeralAboveCurrentNumber - keySub == number)
                     {
                         romanNumeral = _romanNumerals[keySub] + romanNumeral;
                         return true;
