@@ -45,5 +45,12 @@ namespace VanHackAssessment.Test
             var roman = Challenge.Numerals(1889);
             Assert.True("MDCCCLXXXIX" == roman, $"Roman numeral {roman} for 1889 is incorrect");
         }
+
+        [Fact]
+        public void ShouldBeXXI()
+        {
+            var roman = Challenge.Numerals(21);
+            Assert.True("XXI" == roman, $"Roman numeral {roman} for 21 is incorrect");
+        }
     }
 }

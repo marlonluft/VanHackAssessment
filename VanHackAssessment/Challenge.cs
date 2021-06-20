@@ -6,7 +6,7 @@ namespace VanHackAssessment
 {
     public class Challenge
     {
-        private static readonly Dictionary<int, char> _romanNumerals = new()
+        private static readonly Dictionary<int, char> _romanNumerals = new Dictionary<int, char>()
         {
             { 1000, 'M' },
             { 500, 'D' },
@@ -92,25 +92,15 @@ namespace VanHackAssessment
         /// <returns>Indicates if it was successul of not</returns>
         private bool TryExactRomanNumeral(int number, out string romanNumeral)
         {
-            var numberText = number.ToString();
-
-            if (number == 1 || (numberText.StartsWith("5") || (numberText.StartsWith("1") && number >= 10)))
+            foreach (var key in _romanNumerals.Keys)
             {
-                foreach (var key in _romanNumerals.Keys)
+                var quantity = Math.DivRem(number, key, out int remainder);
+
+                if (remainder == 0 && quantity <= 3)
                 {
-                    int remainder = number % key;
+                    romanNumeral = new string(_romanNumerals[key], quantity);
 
-                    if (remainder != number)
-                    {
-                        romanNumeral = _romanNumerals[key].ToString();
-
-                        if (TryExactRomanNumeral(remainder, out string romanNumeralComplement))
-                        {
-                            romanNumeral += romanNumeralComplement;
-                        }
-
-                        return true;
-                    }
+                    return true;
                 }
             }
 
