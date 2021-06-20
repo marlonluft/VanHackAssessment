@@ -30,30 +30,24 @@ namespace VanHackAssessment
 
             for (int i = romanNumber.Length - 1; i >= 0; i--)
             {
-                int nextValueIndex = i - 1;
-
                 var currentPlaceString = romanNumber.Substring(i, 1);
-                var nextPlaceString = nextValueIndex >= 0 ? romanNumber.Substring(nextValueIndex, 1) : null;
 
                 var currentValue = _romanNumerals[currentPlaceString];
-                var nextValue = nextPlaceString != null ? (int?)_romanNumerals[nextPlaceString] : null;
+                var nextValue = GetNextValue(romanNumber, i);
 
                 if (nextValue.HasValue && nextValue.Value < currentValue)
                 {
                     value += currentValue - nextValue.Value;
-                    i = nextValueIndex;
+                    i--;
                 }
                 else
                 {
                     int sum = currentValue + (nextValue ?? 0);
                     var process = true;
                     while (process)
-                    {                        
-                        nextValueIndex --;
-                        i = nextValueIndex;
-
-                        nextPlaceString = nextValueIndex >= 0 ? romanNumber.Substring(nextValueIndex, 1) : null;
-                        nextValue = nextPlaceString != null ? (int?)_romanNumerals[nextPlaceString] : null;
+                    {
+                        i--;
+                        nextValue = GetNextValue(romanNumber, i);
 
                         if (!nextValue.HasValue || nextValue.Value < currentValue)
                         {
@@ -70,6 +64,13 @@ namespace VanHackAssessment
             }
 
             return value;
+        }
+
+        private int? GetNextValue(string romanNumber, int currentIndex)
+        {
+            var nextIndex = currentIndex - 1;
+            var nextPlaceString = nextIndex >= 0 ? romanNumber.Substring(nextIndex, 1) : null;
+            return nextPlaceString != null ? (int?)_romanNumerals[nextPlaceString] : null;
         }
     }
 }
