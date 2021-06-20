@@ -66,11 +66,11 @@ namespace VanHackAssessment
                     {
                         RomanNumeral = $"{romanNumber}{RomanNumeral}";
                     }
-                    else if (TryDecreaseRomanNumeral(numericalPlace, out romanNumber))
+                    else if (TrySubtractingRomanNumeral(numericalPlace, out romanNumber))
                     {
                         RomanNumeral = $"{romanNumber}{RomanNumeral}";
                     }
-                    else if (TryIncreaseRomanNumeral(numericalPlace, out romanNumber))
+                    else if (TrySummingRomanNumeral(numericalPlace, out romanNumber))
                     {
                         RomanNumeral = $"{romanNumber}{RomanNumeral}";
                     }
@@ -118,7 +118,7 @@ namespace VanHackAssessment
         /// <param name="number">decimal place number</param>
         /// <param name="romanNumeral">return the roman numeral</param>
         /// <returns>Indicates if it was successul of not</returns>        
-        private bool TryIncreaseRomanNumeral(int number, out string romanNumeral)
+        private bool TrySummingRomanNumeral(int number, out string romanNumeral)
         {
             var romanNumeralBelowCurrentNumber = _romanNumerals.Keys
                 .Where(x => x < number)
@@ -155,7 +155,7 @@ namespace VanHackAssessment
         /// <param name="number">decimal place number</param>
         /// <param name="romanNumeral">return the roman numeral</param>
         /// <returns>Indicates if it was successul of not</returns>
-        private bool TryDecreaseRomanNumeral(int number, out string romanNumeral)
+        private bool TrySubtractingRomanNumeral(int number, out string romanNumeral)
         {
             var romanNumeralAboveCurrentNumber = _romanNumerals.Keys
                 .Where(x => x > number)
