@@ -30,9 +30,7 @@ namespace VanHackAssessment
 
             for (int i = romanNumber.Length - 1; i >= 0; i--)
             {
-                var currentPlaceString = romanNumber.Substring(i, 1);
-
-                var currentValue = _romanNumerals[currentPlaceString];
+                var currentValue = GetValue(romanNumber, i);
                 var nextValue = GetNextValue(romanNumber, i);
 
                 if (nextValue.HasValue && nextValue.Value < currentValue)
@@ -55,7 +53,7 @@ namespace VanHackAssessment
                         }
                         else
                         {
-                            sum += nextValue.Value;                            
+                            sum += nextValue.Value;
                         }
                     }
 
@@ -71,6 +69,12 @@ namespace VanHackAssessment
             var nextIndex = currentIndex - 1;
             var nextPlaceString = nextIndex >= 0 ? romanNumber.Substring(nextIndex, 1) : null;
             return nextPlaceString != null ? (int?)_romanNumerals[nextPlaceString] : null;
+        }
+
+        private int GetValue(string romanNumber, int currentIndex)
+        {
+            var currentPlaceString = romanNumber.Substring(currentIndex, 1);
+            return _romanNumerals[currentPlaceString];
         }
     }
 }
